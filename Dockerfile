@@ -20,6 +20,9 @@ FROM redis:6-alpine
 # Switch to root to copy files
 USER root
 
+# Install runtime dependency for redis-cell module
+RUN apk add --no-cache libgcc
+
 # Create module directory
 RUN mkdir -p /usr/local/lib/redis/modules
 
