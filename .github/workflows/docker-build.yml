@@ -6,6 +6,10 @@ on:
     tags: [ 'v*.*.*' ] # Trigger on version tags
   pull_request:
     branches: [ main ] # Trigger on PRs (build only)
+  schedule:
+    # Run at 03:00 UTC every day
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Allow manual trigger from Actions tab
 
 jobs:
   build-and-push:
