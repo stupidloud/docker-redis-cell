@@ -1,0 +1,29 @@
+name: Build Redis with Cell Docker Image
+
+on:
+  push:
+    branches: [ main ] # 当推送到 main 分支时触发
+  pull_request:
+    branches: [ main ] # 当向 main 分支发起 Pull Request 时触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu Runner
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # 检出你的代码库
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3 # 设置 Docker Buildx 以获得更好的构建性能和特性
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5 # 使用官方的 build-push action
+        with:
+          context: . # Docker 构建上下文为仓库根目录
+          file: ./Dockerfile # 指定 Dockerfile 的路径
+          push: false # 设置为 false，表示只构建不推送镜像
+          tags: redis-with-cell:latest # 为构建的镜像打上标签 (可根据需要修改)
+          # 启用 Docker 构建缓存 (使用 GitHub Actions 缓存) 以加速后续构建
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
