@@ -47,5 +47,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }} # Use generated tags
           labels: ${{ steps.meta.outputs.labels }} # Use generated labels
           platforms: linux/amd64,linux/arm64 # Target platforms
+          provenance: false # Disable SLSA provenance attestation
           cache-from: type=gha
           cache-to: type=gha,mode=max # Build cache
